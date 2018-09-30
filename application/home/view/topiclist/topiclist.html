@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>拍客</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/home/css/css.css">
+</head>
+<body class="topic activity">
+	
+	<!-- 导航栏 -->
+	{include file="../application/home/view/common/header.html" /}
+
+
+	<section class="main">
+		<div class="topicTop">
+			<a href="">OPPO社区<s></s></a>
+			<span>拍客<u></u><s></s></span>
+		</div>
+		
+			<!-- 侧边栏开始 -->
+			{include file="../application/home/view/common/aside.html" /}
+		<!-- 侧边栏结束 -->
+		<div class="lSide">
+			<ul>
+				{volist name="topiclist" id="vo"}
+				<li class="shootBox box">
+					<a href="/home/topiclist/detail?id={$vo.id}" class="shootPic"><img src="{$vo.img_src}"></a>
+					<div class="shootBoxBot">
+						<a href="/home/topiclist/detail?id={$vo.id}" ><p style="margin-left: 10px;color: #959393;font-size: 15px">{$vo.title}</p></a>
+						<a href="" class="userPic"><img src="{$vo.toupic}"></a>
+						<a href="" class="user">{$vo.username}</a>
+						<a href="" class="praise"><i></i><span>24</span></a>
+					</div>
+				</li>
+				{/volist}
+			</ul>
+		</div>
+		<h1 class="clear"></h1>
+	</section>
+
+
+	<footer class="footer">
+		<div>
+			<a href="">OPPO论坛</a>
+			<span>|</span>
+			<a href="">OPPO乐园</a>
+			<span>|</span>
+			<a href="">OPPOR11</a>
+			<span>|</span>
+			<a href="">OPPOR9</a>
+		</div>
+		<p>
+			<strong>   ©  2005 - 2017 广东欧珀移动通信有限公司 版权所有</strong> (
+			<a href="" id="icp">粤ICP备08130115号-3</a> )
+		</p>
+	</footer>
+
+</body>
+</html>

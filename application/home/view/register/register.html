@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>注册</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/home/css/login_reg.css">
+</head>
+<body>
+	<div id="header">
+		<ul>
+			<li><a href="http://www.oppo.com/" translang="oppocom">OPPO官网</a></li>
+			<li><a href="http://www.oppo.cn/" translang="oppocn">OPPO社区</a></li>
+			<li><a href="http://www.coloros.com/" translang="coloros">ColorOS</a></li>
+		</ul>
+	</div>
+	<div id="content">
+		<div class="content_header">注册OPPO账号</div>
+			<form class="content_down" action="{:Url('home/register/insert')}" method="post">
+				<input type="text" name="phonenum" id="tell" class="input_other" placeholder="请输入手机号码">
+				<input type="text" name="code" class="message" placeholder="短信验证码"><button type="button" id="btn_num" onclick="send(this);">获取验证码</button>
+				<div style="display: flex; ">
+				<input type="text" name="verify" class="message" id="codenum" placeholder="请输入验证码">
+				<div id="btn_code"><img src="{:Url('home/register/verify')}" style="width: 125px; height: 48px;" onclick="this.src='{:Url("home/register/verify")}'"></div>
+				</div>
+				<input type="text" name="password" class="input_other" placeholder="密码">
+				<input type="text" name="repassword" class="input_other" placeholder="确认密码">
+				<input type="submit" class="button" id="smsBtn" value="立即注册" >
+			</form>
+	</div>
+	<script type="text/javascript" src="__STATIC__/home/js/jquery.min.js"></script>
+	<script type="text/javascript">
+	function send(obj)
+	{
+		var temp=60;
+		var tell = $('#tell').val();
+		$.post('{:Url('home/register/sms')}', {tell: tell}, function(ret) {
+			if ( ret.status == true )
+			{
+				var t=setInterval(function(){
+					temp--;
+					$(obj).html(temp+"S");
+					if (temp==0) {
+					clearInterval(t);
+					$(obj).html("重新发送");
+				    }
+				},1000);
+				
+				
+			}
+		},'json');
+	}
+	</script>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="__STATIC__/home/css/css.css">
+	<title>OPPOR11_前后2000万拍照更清晰_OPPO手机官方社区</title>
+</head>
+<body>
+	<!-- 导航栏 -->
+	{include file="../application/home/view/common/header.html" /}
+
+
+	<section class="main">
+		<!-- 轮播开始 -->
+		<div class="roll">
+			<p class="img">
+				<a href=""><img src="__STATIC__/home/images/15107093797817.jpg_w1080.jpg" alt=""></a>
+				<a href=""><img src="__STATIC__/home/images/15111437203091.jpg_w1080.jpg" alt=""></a>
+				<a href=""><img src="__STATIC__/home/images/15111435742922.jpg_w1080.jpg" alt=""></a>
+				<a href=""><img src="__STATIC__/home/images/15107093797817.jpg_w1080.jpg" alt=""></a>
+			</p>
+			<p class="point">
+				<a href="" class='showing'></a>
+				<a href=""></a>
+				<a href=""></a>
+			</p>
+		</div>
+		<!-- 轮播结束 -->
+		<!-- 侧边栏 -->
+		{include file="../application/home/view/common/aside.html" /}
+
+		<!-- 首页列表开始 -->
+		<aside class="lSide ">
+			<h1 class="boxTitle"> 热帖推荐 </h1>
+			{volist name="topiclist" id="vo"}
+			<div class="blog box">
+				<a href="" class="headPic"><img src="{$vo.toupic}"></a>
+				<div class="blogcont">
+					<h1 class="blogTit">
+						<a href="/home/topiclist/detail?id={$vo.id}">{$vo.title}</a>
+						<span>{$vo.username}</span>
+					</h1>
+					<section class="blogPic">
+						{volist name="vo.img_src" id="v"}
+						<a href="">
+							<span><img src="{$v}"></span>
+						</a>
+						{/volist}
+					</section>
+					<div class="blogBot">
+						<p class="date">{$vo.reg_date}</p>
+						<div class="opr">
+							<span class="view"><i></i>776</span>
+							<a href="" class="forward"><i></i>1</a>
+							<a href="" class="reply"><i></i>30</a>
+							<a href="" class="praise"><i></i>483</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{/volist}
+
+			<ul class="loadMore">没有数据</ul>
+		</aside>
+		<!-- 首页列表结束 -->
+
+		<h1 class="clear"></h1>
+	</section>
+	<div class="indexLink box">
+		<div>友情链接</div>
+		<li><a href="">OPPO R11</a></li>
+	</div>
+	
+	<footer class="footer">
+		<div>
+			<a href="">OPPO论坛</a>
+			<span>|</span>
+			<a href="">OPPO乐园</a>
+			<span>|</span>
+			<a href="">OPPOR11</a>
+			<span>|</span>
+			<a href="">OPPOR9</a>
+		</div>
+		<p>
+			<strong>   ©  2005 - 2017 广东欧珀移动通信有限公司 版权所有</strong> (
+			<a href="" id="icp">粤ICP备08130115号-3</a> )
+		</p>
+	</footer>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>属于O粉的兴趣圈子_话题_OPPO手机官方社区</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/home/css/css.css">
+</head>
+<body class="topic">
+	
+	<!-- 导航栏 -->
+	{include file="../application/home/view/common/header.html" /}
+
+	<section class="main">
+		<div class="topicTop">
+			<a href="">OPPO社区<s></s></a>
+			<span>话题<u></u><s></s></span>
+		</div>
+		
+		<!-- 侧边栏开始 -->
+			{include file="../application/home/view/common/aside.html" /}
+		<!-- 侧边栏结束 -->
+
+
+		<div class="lSide">
+			<h1 class="lSideTop box"><a>全部话题</a></h1>
+			<ul>
+				{volist name="topic" id="vo"}
+				<li class="topicBox box">
+					<a href="" class="follow">关注</a>
+					<a href="/home/topiclist/index?id={$vo.htid}" class="topicPic"><img src="{$vo.htpic}"></a>
+					<h2><a href="/home/Topiclist/index?id={$vo.htid}" target="_self">{$vo.htname}</a></h2>
+					<p>{$vo.htdesc}</p>
+					<div class="topicData">
+						<span>阅读<em>40.2万</em></span>
+						<span>讨论<em>8.7万</em></span>
+					</div>
+				</li>
+				{/volist}
+
+				<div class="topicPage box">
+					<a href="" class="prePage unClick"><i></i>上一页</a>
+					<span>
+						<ul id="pageing">
+							<li><a class="currentPage" href="">第1页</a></li>
+							<li><a href="">第2页</a></li>
+						</ul>
+						<a href="">第1页<i></i></a>
+					</span>
+					<a href="" class="nextPage">下一页<i></i></a>
+				</div>
+			</ul>
+		</div>
+		<h1 class="clear"></h1>
+	</section>
+
+	<footer class="footer">
+		<div>
+			<a href="">OPPO论坛</a>
+			<span>|</span>
+			<a href="">OPPO乐园</a>
+			<span>|</span>
+			<a href="">OPPOR11</a>
+			<span>|</span>
+			<a href="">OPPOR9</a>
+		</div>
+		<p>
+			<strong>   ©  2005 - 2017 广东欧珀移动通信有限公司 版权所有</strong> (
+			<a href="" id="icp">粤ICP备08130115号-3</a> )
+		</p>
+	</footer>
+
+</body>
+</html>

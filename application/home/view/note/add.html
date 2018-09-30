@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>OPPOR11_前后2000万拍照更清晰_OPPO手机官方社区</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/home/css/css.css">
+</head>
+<body class="topic activity dynamic post">
+	
+	{include file="../application/home/view/common/header.html" /}
+
+	<section class="main">
+		<div class="topicTop">
+			<a href="">OPPO社区<s></s></a>
+			<span>发帖<u></u><s></s></span>
+		</div>
+		<!-- 侧边栏开始 -->
+		{include file="../application/home/view/common/aside.html" /}
+		<!-- 侧边栏结束 -->
+
+		<aside class="lSide box">
+			<form action="/home/note/insert" method="post" enctype="multipart/form-data">
+			<div style="margin: 20px 20px 20px 10px;">
+					<div style="margin: 20px 20px 20px 10px;">
+						<input type="text" name="title" style="border: 1px solid #CCC;border-radius: 3px;width: 100%;padding: 10px 5px;" placeholder="帖子标题">
+					</div>
+					<div style="margin: 20px 20px 20px 10px;">
+						 选择话题: 
+			            <select name="huati" style="padding: 10px 20px;margin-left: 25px;">
+			            	 {volist name="topic" id="vo"}
+							<option value="{$vo.htid}">{$vo.htname}</option>
+							{/volist}
+                        </select>
+					</div>
+					<div style="margin: 20px 20px 20px 10px;">
+			            主题图片: <span id="img-list-box" style="margin-left: 25px;">
+			             <!--  <input type="file" id="upfile_img" onchange="upimg();" /> -->
+			            </span>
+			            <span style="display:inline-block;height: 30px;position: relative;top:0px;left:0px;">
+			              <a style="display: inline-block;width: 100px;height:30px;line-height: 30px;text-align:center;background: #F60;color: #FFF;" >图片上传</a>
+			              <input type="file" name="img_src" style="width: 100px;border: 1px solid red;position: absolute;top:0px;left: 0px;height: 30px;opacity: 0;" id="up-img-file" onchange="upimg(this)">
+			            </span>
+			            <!-- <button type="button" onclick="showModal();">图片上传</button> -->
+			        </div>
+			        <div>
+			        	<script id="container" name="content" type="text/plain" style="height: 400px;width: 100%">
+					        这里写你的初始化内容
+					    </script>
+			        </div>
+			        <div style="width: 100%;text-align: right;margin: 40px 20px 20px 10px">
+						<button type="submit" style="margin-right: 50px; background: #4F9859;color: #FFF;border: #4F9859;height: 50px;width: 100px;">发表帖子</button>
+					</div>
+			</form>
+		</aside>
+
+		<h1 class="clear"></h1>
+	</section>
+
+
+	<footer class="footer">
+		<div>
+			<a href="">OPPO论坛</a>
+			<span>|</span>
+			<a href="">OPPO乐园</a>
+			<span>|</span>
+			<a href="">OPPOR11</a>
+			<span>|</span>
+			<a href="">OPPOR9</a>
+		</div>
+		<p>
+			<strong>   ©  2005 - 2017 广东欧珀移动通信有限公司 版权所有</strong> (
+			<a href="" id="icp">粤ICP备08130115号-3</a> )
+		</p>
+	</footer>
+
+	<!-- 配置文件 -->
+	<script type="text/javascript" src="__STATIC__/home/js/jquery.min.js"></script>
+    <script type="text/javascript" src="__STATIC__/tools/UEditor/ueditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="__STATIC__/tools/UEditor/ueditor.all.js"></script>
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        var ue = UE.getEditor('container');
+	function upimg(obj)
+	{
+		if( obj.value == "" ) {
+		  return;
+		}
+
+	  var formdata = new FormData();
+	  //<input type="file" name="img" value="" /> 
+	  formdata.append("img" , $(obj)[0].files[0]);//获取文件法二
+	  $.ajax({
+	    type : 'post',
+	    url : '/home/note/upimg',
+	    data : formdata,
+	    cache : false,
+	    processData : false, // 不处理发送的数据，因为data值是Formdata对象，不需要对数据做处理
+	    contentType : false, // 不设置Content-type请求头
+	    success : function(response){
+	    	//$('#img-text').val(response);
+	    	console.log(response);
+	    	// var html = "<span>< img src='"+response+"' width='120' /><input type='hidden' name='imgs[]' value='"+response+"' /></span>";
+	    	// $('#img-list-box').append(html);
+	      var html = '<div style="position: relative;margin-right: 20px;margin-bottom: 15px;width: 132px;display: inline-block;border: 1px solid #CCC;background:#EEE;">'
+	                +'<span style="display: block;width: 120px;height: 80px;border: 1px solid #F2F1F0;margin: 5px;overflow: hidden;">'
+	                  +'<img src="'+response+'" style="width: 100%;" />'
+	                +'</span>'
+	                +'<input type="hidden" name="imgs[]" value="'+response+'" />'
+	                +'<a onclick="delImg(this);" style="z-index: 10;display: block;top: -8px;cursor:pointer;right: -8px;position:absolute;width: 20px;height: 20px;background: #CCC;border-radius:100%;text-align:center;line-height: 20px;border: 1px solid #C1C1C1;color: #555;">X</ a>'
+	              +'</div>';
+	      
+	      $('#img-list-box').append(html);
+	    },
+	    error : function(){ }
+	  });
+	}
+
+	function delImg(obj)
+	{
+		$(obj).parent('div').remove();
+	}
+	    </script>
+
+</body>
+</html>

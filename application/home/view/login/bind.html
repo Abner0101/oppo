@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>登录</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/home/css/login_reg.css">
+</head>
+<body>
+	<div id="header">
+		<ul>
+			<li><a href="http://www.oppo.com/" translang="oppocom">OPPO官网</a></li>
+			<li><a href="http://www.oppo.cn/" translang="oppocn">OPPO社区</a></li>
+			<li><a href="http://www.coloros.com/" translang="coloros">ColorOS</a></li>
+		</ul>
+	</div>
+	<div id="content">
+		<div class="content_header">绑定手机号</div>
+			<form class="content_down tell_bind" action="{:Url('home/login/checkbind')}" method="post">
+				<input type="text" name="phonenum" id="tell" class="input_other" placeholder="请输入手机号码">
+				<input type="text" name="code" class="message" placeholder="短信验证码"><button type="button" id="btn_num" onclick="send(this);">获取验证码</button>
+				<input type="submit" class="button" id="smsBtn" value="立即绑定" >
+			</form>
+	</div>
+	<script type="text/javascript" src="__STATIC__/home/js/jquery.min.js"></script>
+	<script type="text/javascript">
+	function send(obj)
+	{
+		var temp=60;
+		var tell = $('#tell').val();
+		if (tell =="") {
+			alert("请输入手机号码!");
+		}
+		$.post('{:Url('home/register/sms')}', {tell: tell}, function(ret) {
+			if ( ret.status == true )
+			{
+				var t=setInterval(function(){
+					temp--;
+					$(obj).html(temp+"S");
+					if (temp==0) {
+					clearInterval(t);
+					$(obj).html("重新发送");
+				    }
+				},1000);
+				
+				
+			}
+		},'json');
+	}
+	</script>
+</body>
+</html>

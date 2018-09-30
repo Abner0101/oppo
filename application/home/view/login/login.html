@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>『OPPO帐号』-登录</title>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/home/css/login_reg.css">
+</head>
+<body class="login">
+	<div id="header">
+		<ul>
+			<li><a href="http://www.oppo.com/" translang="oppocom">OPPO官网</a></li>
+			<li><a href="http://www.oppo.cn/" translang="oppocn">OPPO社区</a></li>
+			<li><a href="http://www.coloros.com/" translang="coloros">ColorOS</a></li>
+		</ul>
+	</div>
+	<section class="loginBox">
+		<div class="mainBox">
+			<div class="top">
+				<img src="__STATIC__/home/images/logo.png">
+				<h3>登录OPPO帐号可享受更多的服务</h3>
+			</div>
+			<div class="loginArea">
+				<form action="{:Url('home/login/check')}" method="post">
+					<p><input type="text" name="phone" placeholder="请输入手机号码"></p>
+					<p><input type="password" name="password" placeholder="请输入密码"></p>
+					<input type="submit" name="" value="登录">
+				</form>
+				<a href="/home/register/index" class="registerBtn">注册OPPO帐号 </a>
+			</div>
+			<div class="otherLink">
+				<p></p>
+				<a href="{$wb_url}"></a>
+				<a href="{$wx_url}" style="margin-top: -30px;margin-left: 80px;"><img src="/static/home/images/wx.png" style="width: 35px;"></a>
+				<a href="#" style="margin-top: -30px;margin-left: 210px;"><img src="/static/home/images/qq.jpg" style="width: 30px;"></a>
+			</div>
+		</div>
+		<div class="loginFooter">© 2005 - 2017 OPPO 版权所有 粤ICP备14056724号-2 联系方式：4001-666-888</div>
+	</section>
+</body>
+</html>

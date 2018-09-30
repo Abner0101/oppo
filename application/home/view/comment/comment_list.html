@@ -1,0 +1,23 @@
+           {volist name="list" id="vo"} 
+            <li>
+				<a href="" class="replyUser"><img src="{$vo.toupic}"></a>
+				<div class="replyBox">
+					<h1>
+						<a href="" class="userName">{$vo.username}</a>
+						<span class="replyBy">来自 OPPO R11.反正都精彩</span>
+					</h1>
+					<p class="comment"> {$vo.content}</p>
+					<div id="recomment_content_box_{$vo.id}"></div>
+
+					<div id="look_comment_{$vo.id}" style="position: absolute;right: 180px;"><a href="javascript:loadrecomment({$vo.id})" style="color: #ABA9A9">查看评论</a></div>
+					<div id="hide_comment_{$vo.id}" style="position: absolute;right: 180px; color: #ABA9A9;display: none;"><a href="javascript:hidecomment({$vo.id})" style="color: #ABA9A9">收起</a></div>
+					<div class="otherOpr" style="margin-top: 50px;">
+						<a>{$vo.reg_date}</a>
+						<span class="reply" ><i onclick="showM({$vo.id})"></i>0</span>
+						<span class="like"><i></i>0</span>
+						<span class="sugar"><i></i>0</span>
+						
+					</div>
+				</div>
+			</li>
+			{/volist}

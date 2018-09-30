@@ -47,6 +47,79 @@ class Wechat extends \think\Controller
 		var_dump($ret);
 	}
 
+	public function tpl()
+	{
+		$appid = "wxc0f8e88d15289fd7";
+		$secret = "98adc14c4e2a7f03d5ce94fc6e6eef7d";
+		$info = cache('access_token');
+		if ( !empty($info) )
+		{
+			$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$appid}&secret={$secret}";
+			$info = get($url);
+			cache("access_token", $info, 7200);
+		} 
+		
+		$info = json_decode($info, true);
+
+		$url = "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={$info['access_token']}";
+		dump($url);
+		
+		$data = [
+			'touser' => 'o91xe1UfvFuepVHpRVHDHWlawlJc',
+			'template_id' => '792tmlmICghjvumb5aDuQKWkVWTrnm0V7E3pBKmZnIk',
+			'url' => 'http://www.weiyinstudio.com',
+			'data' => [
+				'money' => [
+					'value' => "1000000",
+					'color' => "red"
+				],
+			]
+		];
+		dump($data);
+		// $data = '{
+  //          "touser":"o0ItfwfnzK_ONP3rxcrI539OZMLE",
+  //          "template_id":"1Kw9nlxedCCq2e8uUnwFPqVFNIcQCv9EYIySjA9E8CY",
+  //          "url":"http://www.weiyinstudio.com",  
+  //          "data":{
+  //                   "money": {
+  //                      "value":"1999",
+  //                      "color":"#173177"
+  //                  }
+  //          }
+  //      }';
+		$data = json_encode($data);
+        $ret = post($url, $data);
+       var_dump($ret);
+	}
+
+	public function qrcode()
+	{
+		$appid = "wxc0f8e88d15289fd7";
+		$secret = "98adc14c4e2a7f03d5ce94fc6e6eef7d";
+		$info = cache('access_token2');
+		if ( !empty($info) )
+		{
+			$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$appid}&secret={$secret}";
+			$info = get($url);
+			cache("access_token2", $info, 7200);
+		} 
+		
+		$info = json_decode($info, true);
+
+		$url = "https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token={$info['access_token']}";
+
+		$data = '{"expire_seconds": 604800, "action_name": "QR_STR_SCENE", "action_info": {"scene": {"scene_str": "sdd_41541541fasdf"}}}';
+
+		$ret = post($url, $data);
+		$ret = json_decode($ret, true);
+		$code=$ret["ticket"];
+		$url="https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket={$code}";
+		return $this->redirect($url);
+		// dump($ret);
+
+	}
+
+
 	public function up()
 	{
 		$file = request()->file('img');
@@ -58,60 +131,6 @@ class Wechat extends \think\Controller
 	            // 成功上传后 获取上传信息
 	            // 输出 jpg
 	            $img_src = ROOT_PATH . 'public/uploads/'.$info->getSaveName();
-
-	        }else{
-	            // 上传失败获取错误信息
-	            $this->error($file->getError());
-	        }
-	    }
-
-	    $appid = "wxc0f8e88d15289fd7";
-		$secret = "98adc14c4e2a7f03d5ce94fc6e6eef7d";
-		$info = cache('access_token');
-		if ( empty($info) )
-		{
-			$url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={$appid}&secret={$secret}";
-			$info = get($url);
-			cache("access_token", $info, 7200);
-		} 
-		
-		$info = json_decode($info, true);
-		$url = "https://api.weixin.qq.com/cgi-bin/media/upload?access_token={$info['access_token']}&type=image";
-
-		$data = array(
-			"media" => new \CURLFile($img_src)
-		);
-
-		$media = post($url, $data);
-		$media = json_decode($media, true);
-
-		//发消息
-		$url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={$info['access_token']}";
-
-		$data = [
-			'touser' => "o91xe1UfvFuepVHpRVHDHWlawlJc",
-			'msgtype' => "image",
-			'image' => [
-				"media_id"=> "{$media['media_id']}"
-			]
-		];
-
-		$data = json_encode($data,JSON_UNESCAPED_UNICODE);
-		$ret = post($url, $data);
-		var_dump($data);
-	}
-
-	public function upvoice()
-	{
-		$file = request()->file('img');
-	    // 移动到框架应用根目录/public/uploads/ 目录下
-	    $img_src = "";
-	    if($file){
-	        $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
-	        if($info){
-	            // 成功上传后 获取上传信息
-	            // 输出 jpg
-	            $img_src = ROOT_PATH . 'public/uploads'.$info->getSaveName();
 
 	        }else{
 	            // 上传失败获取错误信息
@@ -144,28 +163,62 @@ class Wechat extends \think\Controller
 
 		$data = [
 			'touser' => "o91xe1UfvFuepVHpRVHDHWlawlJc",
-			'msgtype' => "voice",
-			'voice' => [
+			'msgtype' => "image",
+			'image' => [
 				"media_id"=> "{$media['media_id']}"
 			]
 		];
 
 		$data = [
 			'touser' => "o91xe1UfvFuepVHpRVHDHWlawlJc",
-			'msgtype' => "video",
-			"video" =>
-			    [
-			      "media_id" => "{$media['media_id']}",
-			      "thumb_media_id"=>"YceBQ5CggFI3x1DdUm81yDLDJmBMPb6DxGjzPGBBg361QmEEevIzL00K_LvnRLLk",
-			      "title"=>"TITLE",
-			      "description"=>"DESCRIPTION"
-			    ]
+			'msgtype' => "voice",
+			'voice' => [
+				"media_id"=> "{$media['media_id']}"
+			]
 		];
+
+		// $data = [
+		// 	'touser' => "o91xe1UfvFuepVHpRVHDHWlawlJc",
+		// 	'msgtype' => "video",
+		// 	"video" =>
+		// 	    [
+		// 	      "media_id" => "{$media['media_id']}",
+		// 	      "thumb_media_id"=>"YceBQ5CggFI3x1DdUm81yDLDJmBMPb6DxGjzPGBBg361QmEEevIzL00K_LvnRLLk",
+		// 	      "title"=>"TITLE",
+		// 	      "description"=>"DESCRIPTION"
+		// 	    ]
+		// ];
+
+		// $data = '{
+  //    		"button":[
+	 //     {    
+	 //          "type":"click",
+	 //          "name":"歌曲",
+	 //          "key":"V1001_TODAY_MUSIC"
+	 //      },
+	 //      {
+	 //           "name":"菜单",
+	 //           "sub_button":[
+	 //           {    
+	 //               "type":"view",
+	 //               "name":"搜搜",
+	 //               "url":"http://www.soso.com/"
+	 //            },
+	 //            {
+	 //               "type":"click",
+	 //               "name":"赞一下我们",
+	 //               "key":"V1001_GOOD"
+	 //            }]
+	 //       }]
+	 // }';
+
+
 
 		$data = json_encode($data,JSON_UNESCAPED_UNICODE);
 		$ret = post($url, $data);
 		var_dump($data);
 	}
+
 
 	public function send()
 	{
@@ -284,7 +337,7 @@ class Wechat extends \think\Controller
 				$time     = time();
 				$msgType  =  'image';
 				//$content  = '欢迎关注我们的微信公众账号'.$postObj->FromUserName.'-'.$postObj->ToUserName;
-				$content = "jbm8-epyjFbc6zLpn5sBlPo2iwV656_hiGt1yTrXWazAIBZz5h6pFlJcnQtDOrmj";
+				$content = "Q1s9ZhMu2zqVOebuyHaVhkBiyXdF7mhubTHX9eJKo7NjppKYwtKJJ4qOeKaMWI3d";
 				//被动回复消息的格式和类型见官方文档，文档位置---消息管理->被动回复用户消息
 				$template = "<xml>
 								<ToUserName><![CDATA[%s]]></ToUserName>
